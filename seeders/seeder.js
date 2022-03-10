@@ -16,23 +16,25 @@ mongoose.connect(DATABASE, () => {
 
 const userSeeds = [
   {
-    name: "Dom",
+    firstName: "Dom",
+    lastName: "Pethicc",
     email: "dom@gmail.com",
     password: hash,
   },
   {
-    name: "Tris",
+    firstName: "Tris",
+    lastName: "Waist",
     email: "tris@gmail.com",
     password: hash,
   },
   {
-    name: "Jiahao",
+    firstName: "Jiahao",
+    lastName: "Shorthair",
     email: "jiahao@gmail.com",
     password: hash,
   },
 ];
 runSeeder = async () => {
-  console.log("test");
   // delete all existing records in the DB
   await User.deleteMany({});
   // inserts seed data
