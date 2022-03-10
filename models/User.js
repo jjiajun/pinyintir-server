@@ -13,18 +13,19 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
     },
     password: { type: String, required: true },
-    phrases: {
-      chinesePhrase: String,
-      pinyin: String,
-      definition: String,
-    },
-    screenshots: {
-      name: String,
-      img: {
-        data: Buffer,
-        contentType: String,
+    phrases: [
+      {
+        chinesePhrase: String,
+        pinyin: String,
+        definition: String,
       },
-    },
+    ],
+    images: [
+      {
+        imagePath: String,
+        description: String,
+      },
+    ],
   },
   /**
    * The { timestamps: true } tells Mongoose to automatically add createdAt and updatedAt properties to the schema. By default, createdAt and updatedAt are of type "Date".

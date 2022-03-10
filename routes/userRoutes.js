@@ -6,7 +6,7 @@ const upload = multer({ dest: "images/" });
 module.exports = (controller, verifyToken) => {
   userRouter.post(
     "/getuserdatabyid",
-    // verifyToken(),
+    verifyToken(),
     controller.getUserDataById.bind(controller)
   );
   userRouter.post(
