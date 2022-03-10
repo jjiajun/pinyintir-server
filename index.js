@@ -7,17 +7,15 @@ const cors = require("cors");
 const verifyToken = require("./middlewares/auth.js");
 
 /** Create connection to mongodb */
-mongoose.connect(
-  DATABASE ? DATABASE : "mongodb://127.0.0.1:27017/chinese-app",
-  () => {
-    console.log("connected to mongodb");
-  }
-);
+mongoose.connect(DATABASE, () => {
+  console.log("connected to mongodb");
+});
 
 /** 
 1. Unlike sequelize, there is no need to use ./models/index.js to create and export db 
 2. Just import models here
 */
+
 const User = require("./models/User.js");
 
 /** Import controllers */

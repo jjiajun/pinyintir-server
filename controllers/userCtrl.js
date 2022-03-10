@@ -14,13 +14,11 @@ class UserController extends BaseController {
   /** get user profile data by id
    * @param {string} id
    */
-  async getUserProfileById(req, res) {
+  async getUserDataById(req, res) {
     try {
       const { id } = req.body;
       console.log("ID: ", id);
-      const userProfile = await this.model
-        .findOne({ _id: id })
-        .populate("friends");
+      const userProfile = await this.model.findOne({ _id: id });
 
       if (!userProfile) {
         return res.send("No data");
@@ -34,10 +32,7 @@ class UserController extends BaseController {
 
   async uploadImage(req, res) {
     const file = req.file;
-    const imagePath = req.file.path;
-    const description = req.body.description;
     console.log("req.file: ", req.file);
-    console.log("uploadFile: ", uploadFile);
     const result = await uploadFile(file);
     /** result:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
@@ -96,23 +91,23 @@ class UserController extends BaseController {
   }
 
   /** Returns a token to the FE if sign up is successful
-   * @param {string} name
+   * @param {string} firstName
+   * @param {string} lastName
    * @param {string} email
    * @param {string} password
-   * @param {string} address
    */
   async signUp(req, res) {
     console.log("signing up");
-    const { name, email, password, address } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     try {
       // auto generates a salt > concatentate with password > hash it x no. of salt rounds and return the hash
       // the higher the salt rounds, the more time the hashing algo takes -> good thing
       const hash = await bcrypt.hash(password, 10);
       const newUser = await this.model.create({
-        name,
+        firstName,
+        lastName,
         email,
         password: hash,
-        address: address,
       });
       if (!newUser) {
         console.log("not new user");
@@ -121,7 +116,8 @@ class UserController extends BaseController {
         console.log("done the do");
         const payload = {
           _id: newUser._id,
-          name: newUser.name,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
         };
         const token = jwt.sign(payload, this.salt, {
           expiresIn: "6h",
