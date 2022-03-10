@@ -25,7 +25,7 @@ Run "npm run seed"
 - Helper functions to upload and download images from S3 are stored in s3.js
 - Controller functions for upload/download are stored in userCtrl.js
 
-### How to upload/download images to/from S3
+### How to upload/download images to/from S3 from frontend
 
 - To upload images (frontend > express > AWS S3 bucket):
 
