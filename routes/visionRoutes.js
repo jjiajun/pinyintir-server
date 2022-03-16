@@ -11,6 +11,7 @@ const checkChinese = async (req, res) => {
     const [result] = await client.annotateImage(req.body.requests[0]);
     const text = result.fullTextAnnotation?.text;
     const annotations = result.textAnnotations
+    annotations.shift()
 
     if (!text) {
       res.json({ status: 'Text not found', chinese: [] });
@@ -27,7 +28,11 @@ const checkChinese = async (req, res) => {
 
       if (characters) {
         const firstWord = characters[0]
+        console.log('firstword',firstWord)
         const firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
+        console.log('firstIndex',firstIndex)
+        console.log('annote',annotations[firstIndex])
+
         const vertices = annotations[firstIndex].boundingPoly.vertices
         let indexDifference = 0;
         for (let i=0 ; i<characters.length;i+=1){
