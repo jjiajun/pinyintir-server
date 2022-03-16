@@ -1,21 +1,23 @@
-const express = require("express");
+const express = require('express');
+
 const userRouter = express.Router();
-const multer = require("multer");
-const upload = multer({ dest: "images/" });
+const multer = require('multer');
+
+const upload = multer({ dest: 'images/' });
 
 module.exports = (controller, verifyToken) => {
   userRouter.post(
-    "/getuserdatabyid",
+    '/getuserdatabyid',
     verifyToken(),
-    controller.getUserDataById.bind(controller)
+    controller.getUserDataById.bind(controller),
   );
   userRouter.post(
-    "/api/images",
-    upload.single("image"),
-    controller.uploadImage.bind(controller)
+    '/api/images',
+    upload.single('image'),
+    controller.uploadImage.bind(controller),
   );
-  userRouter.get("/images/:key", controller.downloadImage.bind(controller));
-  userRouter.post("/login", controller.logIn.bind(controller));
-  userRouter.post("/signup", controller.signUp.bind(controller));
+  userRouter.get('/images/:key', controller.downloadImage.bind(controller));
+  userRouter.post('/login', controller.logIn.bind(controller));
+  userRouter.post('/signup', controller.signUp.bind(controller));
   return userRouter;
 };

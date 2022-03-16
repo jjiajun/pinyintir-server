@@ -1,6 +1,6 @@
-require("dotenv").config();
-const S3 = require("aws-sdk/clients/s3");
-const fs = require("fs");
+require('dotenv').config();
+const S3 = require('aws-sdk/clients/s3');
+const fs = require('fs');
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
@@ -35,7 +35,8 @@ function getFileStream(fileKey) {
   return s3.getObject(downloadParams).createReadStream();
 }
 
-// need to wrap uploadFile in curly braces if not you will not be able to destructure it when you import it in userCtrl
+// need to wrap uploadFile in curly braces
+// if not you will not be able to destructure it when you import it in userCtrl
 module.exports = { uploadFile, getFileStream };
 // exports.uploadFile = uploadFile;
 // exports.getFileStream = getFileStream;

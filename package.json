@@ -28,5 +28,10 @@
     "multer": "^1.4.4",
     "nodemon": "^2.0.15"
   },
-  "homepage": "https://github.com/jjiajun/Chinese-AR-App#readme"
+  "homepage": "https://github.com/jjiajun/Chinese-AR-App#readme",
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
+  }
 }
