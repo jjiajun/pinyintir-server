@@ -33,7 +33,7 @@ const checkChinese = async (req, res) => {
         const firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
         console.log('firstIndex',firstIndex)
         console.log('annote',annotations[firstIndex])
-        console.log(annotations)
+        
         const vertices = annotations[firstIndex].boundingPoly.vertices
         let indexDifference = 0;
         for (let i=0 ; i<characters.length;i+=1){
