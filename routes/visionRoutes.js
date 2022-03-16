@@ -11,6 +11,7 @@ const checkChinese = async (req, res) => {
     const [result] = await client.annotateImage(req.body.requests[0]);
     const text = result.fullTextAnnotation?.text;
     const annotations = result.textAnnotations
+    annotations.shift()
 
     if (!text) {
       res.json({ status: 'Text not found', chinese: [] });
