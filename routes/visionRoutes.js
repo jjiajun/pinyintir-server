@@ -10,6 +10,7 @@ const checkChinese = async (req, res) => {
   try {
     const [result] = await client.annotateImage(req.body.requests[0]);
     const text = result.fullTextAnnotation?.text;
+    const annotations = result.textAnnotations
 
     if (!text) {
       res.json({ status: 'Text not found', chinese: [] });
@@ -25,10 +26,21 @@ const checkChinese = async (req, res) => {
       const characters = lines[i].match(/[\u3000\u3400-\u4DBF\u4E00-\u9FFF]|[0-9]+/g)?.join('');
 
       if (characters) {
+        const firstWord = characters[0]
+        const firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
+        const vertices = annotations[firstIndex].boundingPoly.vertices
+        let indexDifference = 0;
+        for (let i=0 ; i<characters.length;i+=1){
+          if (characters[i]===annotations[firstIndex+i].description[0]){
+            indexDifference += annotations[firstIndex+i].description.length
+            i+= annotations[firstIndex+i].description.length-1
+          }
+        }
+        annotations.splice(firstIndex,indexDifference)
         const pinyin = pinyinify(characters);
         toTranslate.push(translate.translate(characters, 'en'));
         count += 1;
-        chinese.push({ id: count, characters, pinyin });
+        chinese.push({ id: count, characters, pinyin,vertices });
       }
     }
 
