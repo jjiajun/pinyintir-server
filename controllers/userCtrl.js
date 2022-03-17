@@ -51,7 +51,6 @@ class UserController extends BaseController {
         $push: {
           images: {
             imagePath: `/images/${result.Key}`,
-            description: req.body.description,
           },
         },
       },
@@ -62,12 +61,31 @@ class UserController extends BaseController {
     res.send({ imagePath: `/images/${result.Key}` });
   }
 
-  async downloadImage(req, res) {
-    const { key } = req.params;
-    const readStream = getFileStream(key);
-    // pipe the image stream straight back to the client
-    readStream.pipe(res);
+  async uploadPhrase(req, res) {
+    console.log('req.body: ', req.body);
+    const { data } = req; // contains data about the image file that was sent over in formData
+    console.log('data: ', data);
+    await this.model.updateOne(
+      { _id: req.body.data.userId },
+      {
+        $push: {
+          phrases: {
+            chinesePhrase: req.body.data.chinesePhrase,
+            pinyin: req.body.data.pinyin,
+            definition: req.body.data.definition
+          },
+        },
+      },
+    );
+    res.send("successfully uploaded phrase!");
   }
+
+  // async downloadImage(req, res) {
+  //   const { key } = req.params;
+  //   const readStream = getFileStream(key);
+  //   // pipe the image stream straight back to the client
+  //   readStream.pipe(res);
+  // }
 
   /** Returns a token and the userId to the FE if log in is successful
    * @param {string} email
