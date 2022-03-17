@@ -27,12 +27,22 @@ const checkChinese = async (req, res) => {
       const characters = lines[i].match(/[\u3000\u3400-\u4DBF\u4E00-\u9FFF]|[0-9]+/g)?.join('');
 
       if (characters) {
+        // console.log('chars',characters)
+        // const firstWord = characters[0]
+        // console.log('firstword',firstWord)
+        // const firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
+        // console.log('firstIndex',firstIndex)
+        // console.log('annote',annotations[firstIndex])
+
+        let wordCounter = 0
         console.log('chars',characters)
-        const firstWord = characters[0]
-        console.log('firstword',firstWord)
-        const firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
-        console.log('firstIndex',firstIndex)
-        console.log('annote',annotations[firstIndex])
+        let firstIndex = -1 
+        while (firstIndex<0){
+          const firstWord = characters[wordCounter]
+          console.log('firstword',firstWord)
+          firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
+          wordCounter += 1
+        }
 
         const vertices = annotations[firstIndex].boundingPoly.vertices
         let indexDifference = 0;
