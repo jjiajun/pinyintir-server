@@ -36,13 +36,13 @@ const checkChinese = async (req, res) => {
 
         const vertices = annotations[firstIndex].boundingPoly.vertices
         let indexDifference = 0;
-        for (let i=0 ; i<characters.length;){
+        for (let i=0 ; i<characters.length; i+=1){
           if  (firstIndex+i > annotations.length-1){
             break
           }
           if (characters[i]===annotations[firstIndex+i].description[0]){
             indexDifference += annotations[firstIndex+i].description.length
-            i+= annotations[firstIndex+i].description.length
+            i+= annotations[firstIndex+i].description.length -1
           }
         }
         annotations.splice(firstIndex,indexDifference)
