@@ -24,9 +24,10 @@ const checkChinese = async (req, res) => {
     let count = 0;
 
     for (let i = 0; i < lines.length; i += 1) {
-      const characters = lines[i].match(/[\u3000\u3400-\u4DBF\u4E00-\u9FFF]|[0-9]+/g)?.join('');
-
-      if (characters) {
+      const characters = lines[i];
+      // const characters = lines[i].match(/[\u3000\u3400-\u4DBF\u4E00-\u9FFF]|[0-9]+/g)?.join('');
+      const regex = /[\u3000\u3400-\u4DBF\u4E00-\u9FFF]/g;
+      if (regex.test(characters)) {
         // console.log('chars',characters)
         // const firstWord = characters[0]
         // console.log('firstword',firstWord)
