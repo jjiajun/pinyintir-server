@@ -80,12 +80,12 @@ class UserController extends BaseController {
     res.send("successfully uploaded phrase!");
   }
 
-  // async downloadImage(req, res) {
-  //   const { key } = req.params;
-  //   const readStream = getFileStream(key);
-  //   // pipe the image stream straight back to the client
-  //   readStream.pipe(res);
-  // }
+  async downloadImage(req, res) {
+    const { key } = req.params;
+    const readStream = getFileStream(key);
+    // pipe the image stream straight back to the client
+    readStream.pipe(res);
+  }
 
   /** Returns a token and the userId to the FE if log in is successful
    * @param {string} email
