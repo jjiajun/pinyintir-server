@@ -33,7 +33,7 @@ const userControl = new UserController(User, SALT);
 const app = express();
 app.use(cors({ origin: true }));
 
-const maxRequestBodySize = '1mb';
+const maxRequestBodySize = '2mb';
 
 /** Middlewares */
 app.use(express.urlencoded({
