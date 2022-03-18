@@ -34,26 +34,25 @@ const checkChinese = async (req, res) => {
         // console.log('firstIndex',firstIndex)
         // console.log('annote',annotations[firstIndex])
 
-        let wordCounter = 0
-        console.log('chars',characters)
-        let firstIndex = -1 
-        while (firstIndex<0){
-          const firstWord = characters[wordCounter]
-          console.log('firstword',firstWord)
-          firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
-          wordCounter += 1
-          if (wordCounter > characters.length){
-            break
+        let wordCounter = 0;
+        console.log('chars', characters);
+        let firstIndex = -1;
+        while (firstIndex < 0) {
+          const firstWord = characters[wordCounter];
+          console.log('firstword', firstWord);
+          firstIndex = annotations.findIndex(({ description }) => description[0] === firstWord);
+          wordCounter += 1;
+          if (wordCounter > characters.length) {
+            break;
           }
         }
 
         let vertices;
 
-        if (firstIndex=== -1){
-          vertices = [{'x':0,'y':0}]
-        }else{
-
-          vertices = annotations[firstIndex].boundingPoly.vertices
+        if (firstIndex === -1) {
+          vertices = [{ x: 0, y: 0 }];
+        } else {
+          vertices = annotations[firstIndex].boundingPoly.vertices;
           let indexDifference = 0;
           for (let j=0 ; j<characters.length; j+=1){
             if  (firstIndex+j > annotations.length-1){
@@ -64,7 +63,7 @@ const checkChinese = async (req, res) => {
               j+= annotations[firstIndex+j].description.length -1
             }
           }
-          annotations.splice(firstIndex,indexDifference)
+          annotations.splice(firstIndex, indexDifference);
         }
         const pinyin = pinyinify(characters);
         toTranslate.push(translate.translate(characters, 'en'));
