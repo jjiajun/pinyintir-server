@@ -42,20 +42,29 @@ const checkChinese = async (req, res) => {
           console.log('firstword',firstWord)
           firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
           wordCounter += 1
-        }
-
-        const vertices = annotations[firstIndex].boundingPoly.vertices
-        let indexDifference = 0;
-        for (let i=0 ; i<characters.length; i+=1){
-          if  (firstIndex+i > annotations.length-1){
+          if (wordCounter > characters.length){
             break
           }
-          if (characters[i]===annotations[firstIndex+i].description[0]){
-            indexDifference += annotations[firstIndex+i].description.length
-            i+= annotations[firstIndex+i].description.length -1
-          }
         }
-        annotations.splice(firstIndex,indexDifference)
+
+        if (firstIndex=== -1){
+          const vertices = [{'x':0,'y':0}]
+        }else{
+
+          const vertices = annotations[firstIndex].boundingPoly.vertices
+          let indexDifference = 0;
+          for (let i=0 ; i<characters.length; i+=1){
+            if  (firstIndex+i > annotations.length-1){
+              break
+            }
+            if (characters[i]===annotations[firstIndex+i].description[0]){
+              indexDifference += annotations[firstIndex+i].description.length
+              i+= annotations[firstIndex+i].description.length -1
+            }
+          }
+          annotations.splice(firstIndex,indexDifference)
+        }
+
         const pinyin = pinyinify(characters);
         toTranslate.push(translate.translate(characters, 'en'));
         count += 1;
