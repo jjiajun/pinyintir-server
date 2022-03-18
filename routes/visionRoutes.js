@@ -46,7 +46,7 @@ const checkChinese = async (req, res) => {
             break;
           }
         }
-
+        console.log('annote',annotations[firstIndex])
         let vertices;
 
         if (firstIndex === -1) {
