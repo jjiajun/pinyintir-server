@@ -14,12 +14,12 @@ module.exports = (controller, verifyToken) => {
   userRouter.post(
     '/api/images',
     upload.single('image'),
-    verifyToken(),
+    // verifyToken(),
     controller.uploadImage.bind(controller),
   );
   userRouter.post(
     '/api/phrases',
-    verifyToken(),
+    // verifyToken(),
     controller.uploadPhrase.bind(controller),
   );
   // userRouter.get('/images/:key', controller.downloadImage.bind(controller));
