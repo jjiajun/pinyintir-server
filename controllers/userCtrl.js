@@ -63,16 +63,14 @@ class UserController extends BaseController {
 
   async uploadPhrase(req, res) {
     console.log('req.body: ', req.body);
-    const { data } = req; // contains data about the image file that was sent over in formData
-    console.log('data: ', data);
     await this.model.updateOne(
-      { _id: req.body.data.userId },
+      { _id: req.body.userId },
       {
         $push: {
           phrases: {
-            chinesePhrase: req.body.data.chinesePhrase,
-            pinyin: req.body.data.pinyin,
-            definition: req.body.data.definition
+            chinesePhrase: req.body.chinesePhrase,
+            pinyin: req.body.pinyin,
+            definition: req.body.definition
           },
         },
       },
