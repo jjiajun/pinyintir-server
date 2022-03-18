@@ -45,7 +45,7 @@ const runSeeder = async () => {
   const allNames = await User.find().select('name');
   console.log('All the users in our app', allNames);
   // get all the userIds
-  const userIds = allNames.map((el) => el._id);
+  const userIds = allNames.map((el) => el.id);
   console.log('All the userIds in our app', userIds);
 };
 

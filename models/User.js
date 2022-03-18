@@ -23,7 +23,6 @@ const userSchema = new Schema(
     images: [
       {
         imagePath: String,
-        description: String,
       },
     ],
   },
