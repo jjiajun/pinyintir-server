@@ -47,11 +47,13 @@ const checkChinese = async (req, res) => {
           }
         }
 
+        let vertices;
+
         if (firstIndex=== -1){
-          const vertices = [{'x':0,'y':0}]
+          vertices = [{'x':0,'y':0}]
         }else{
 
-          const vertices = annotations[firstIndex].boundingPoly.vertices
+          vertices = annotations[firstIndex].boundingPoly.vertices
           let indexDifference = 0;
           for (let i=0 ; i<characters.length; i+=1){
             if  (firstIndex+i > annotations.length-1){
