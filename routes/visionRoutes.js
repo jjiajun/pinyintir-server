@@ -10,6 +10,8 @@ const checkChinese = async (req, res) => {
   try {
     const [result] = await client.annotateImage(req.body.requests[0]);
     const text = result.fullTextAnnotation?.text;
+    const annotations = result.textAnnotations
+    annotations.shift()
 
     if (!text) {
       res.json({ status: 'Text not found', chinese: [] });
@@ -25,10 +27,39 @@ const checkChinese = async (req, res) => {
       const characters = lines[i].match(/[\u3000\u3400-\u4DBF\u4E00-\u9FFF]|[0-9]+/g)?.join('');
 
       if (characters) {
+        // console.log('chars',characters)
+        // const firstWord = characters[0]
+        // console.log('firstword',firstWord)
+        // const firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
+        // console.log('firstIndex',firstIndex)
+        // console.log('annote',annotations[firstIndex])
+
+        let wordCounter = 0
+        console.log('chars',characters)
+        let firstIndex = -1 
+        while (firstIndex<0){
+          const firstWord = characters[wordCounter]
+          console.log('firstword',firstWord)
+          firstIndex = annotations.findIndex(({description})=>description[0] === firstWord)
+          wordCounter += 1
+        }
+
+        const vertices = annotations[firstIndex].boundingPoly.vertices
+        let indexDifference = 0;
+        for (let i=0 ; i<characters.length; i+=1){
+          if  (firstIndex+i > annotations.length-1){
+            break
+          }
+          if (characters[i]===annotations[firstIndex+i].description[0]){
+            indexDifference += annotations[firstIndex+i].description.length
+            i+= annotations[firstIndex+i].description.length -1
+          }
+        }
+        annotations.splice(firstIndex,indexDifference)
         const pinyin = pinyinify(characters);
         toTranslate.push(translate.translate(characters, 'en'));
         count += 1;
-        chinese.push({ id: count, characters, pinyin });
+        chinese.push({ id: count, characters, pinyin,vertices });
       }
     }
 
