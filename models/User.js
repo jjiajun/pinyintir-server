@@ -13,7 +13,9 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
     },
     password: { type: String, required: true },
-    categories: [String],
+    categories: [
+      { name: String },
+    ],
     phrases: [
       {
         chinesePhrase: String,
@@ -22,7 +24,9 @@ const userSchema = new Schema(
         category: String,
       },
     ],
-    images: [String],
+    images: [{
+      imagePath: String,
+    }],
   },
   /**
    * The { timestamps: true } tells Mongoose to automatically
