@@ -48,7 +48,7 @@ class UserController extends BaseController {
   async signUp(req, res) {
     console.log('signing up');
     const {
-      firstName, lastName, email, password,
+      lastName, email, password,
     } = req.body;
     try {
       // auto generates a salt > concatentate with password >
@@ -56,7 +56,6 @@ class UserController extends BaseController {
       // the higher the salt rounds, the more time the hashing algo takes -> good thing
       const hash = await bcrypt.hash(password, 10);
       const newUser = await this.model.create({
-        firstName,
         lastName,
         email,
         password: hash,
@@ -67,8 +66,7 @@ class UserController extends BaseController {
       } else {
         console.log('done the do');
         const payload = {
-          _id: newUser.id,
-          firstName: newUser.firstName,
+          _id: newUser.id, 
           lastName: newUser.lastName,
         };
         const token = jwt.sign(payload, this.salt, {
