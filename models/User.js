@@ -13,18 +13,20 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
     },
     password: { type: String, required: true },
+    categories: [
+      { name: String },
+    ],
     phrases: [
       {
         chinesePhrase: String,
         pinyin: String,
         definition: String,
+        category: String,
       },
     ],
-    images: [
-      {
-        imagePath: String,
-      },
-    ],
+    images: [{
+      imagePath: String,
+    }],
   },
   /**
    * The { timestamps: true } tells Mongoose to automatically

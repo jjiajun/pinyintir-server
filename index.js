@@ -21,13 +21,19 @@ const User = require('./models/User.js');
 
 /** Import controllers */
 const UserController = require('./controllers/userCtrl.js');
+const ImageController = require('./controllers/imageCtrl.js');
+const PhraseController = require('./controllers/phraseCtrl.js');
 
 /** Import routes */
 const userRoutes = require('./routes/userRoutes.js');
 const visionRoutes = require('./routes/visionRoutes.js');
+const imageRoutes = require('./routes/imageRoutes.js');
+const phraseRoutes = require('./routes/phraseRoutes.js');
 
 /** Instantiate controllers and pass in models. I will include SALT later (for JWT verification) */
 const userControl = new UserController(User, SALT);
+const imageControl = new ImageController(User, SALT);
+const phraseControl = new PhraseController(User, SALT);
 
 /** Initialize express instance */
 const app = express();
@@ -47,7 +53,9 @@ app.use(express.static('public'));
 
 /** Instantiate routes */
 app.use('/vision', visionRoutes(verifyToken));
-app.use('/', userRoutes(userControl, verifyToken));
+app.use('/image', imageRoutes(imageControl, verifyToken));
+app.use('/phrase', phraseRoutes(phraseControl, verifyToken));
+app.use('/user', userRoutes(userControl, verifyToken));
 
 /** Set app to listen on the selected PORT */
 const PORT = process.env.PORT || 3008;

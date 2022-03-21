@@ -51,7 +51,7 @@ const checkChinese = async (req, res) => {
             break;
           }
         }
-        console.log('annote',annotations[firstIndex])
+        console.log('annote', annotations[firstIndex]);
         let vertices;
 
         if (firstIndex === -1) {
@@ -59,14 +59,14 @@ const checkChinese = async (req, res) => {
         } else {
           vertices = annotations[firstIndex].boundingPoly.vertices;
           let indexDifference = 0;
-          for (let j=0 ; j<characters.length; j+=1){
-            console.log('counter j:',j, 'character',,'compare',)
-            if  (firstIndex+j > annotations.length-1){
-              break
+          for (let j = 0; j < characters.length; j += 1) {
+            console.log('counter j:', j);
+            if (firstIndex + j > annotations.length - 1) {
+              break;
             }
-            if (characters[j]===annotations[firstIndex+j].description[0]){
-              indexDifference += annotations[firstIndex+j].description.length
-              j+= annotations[firstIndex+j].description.length -1
+            if (characters[j] === annotations[firstIndex + j].description[0]) {
+              indexDifference += annotations[firstIndex + j].description.length;
+              j += annotations[firstIndex + j].description.length - 1;
             }
           }
           annotations.splice(firstIndex, indexDifference);

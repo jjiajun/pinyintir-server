@@ -1,90 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const util = require('util');
-const { uploadFile, getFileStream } = require('../s3.js');
 const BaseController = require('./baseCtrl.js');
 
-const unlinkFile = util.promisify(fs.unlink);
-
 class UserController extends BaseController {
-  /** get user profile data by id
-   * @param {string} id
-   */
-  async getUserDataById(req, res) {
-    try {
-      const { userId } = req.body;
-      console.log('ID: ', userId);
-      const userProfile = await this.model.findOne({ _id: userId });
-
-      if (!userProfile) {
-        res.send('No data');
-        return;
-      }
-
-      res.send({ userProfile });
-    } catch (err) {
-      this.errorHandler(err, res);
-    }
-  }
-
-  async uploadImage(req, res) {
-    console.log('req.body: ', req.body);
-    const { file } = req; // contains data about the image file that was sent over in formData
-    console.log('req.file: ', req.file);
-    const result = await uploadFile(file);
-    /** result:  {
-      ETag: '"76823f128b9a086c136a0f378a35691f"',
-      // this location url can be used to directly access images
-      // (if we allow public access) (we didnt though)
-      Location: 'https://chinese-ar-app.s3.ap-southeast-1.amazonaws.com/16dd64db8c69c194e3b09696d8a6086b',
-      key: '16dd64db8c69c194e3b09696d8a6086b',
-      // This Key matches the name of the file that is on s3 bucket now (you can check it out!)
-      Key: '16dd64db8c69c194e3b09696d8a6086b',
-      Bucket: 'chinese-ar-app'
-    } */
-    // add Key to db under this user's name (to be continued)
-    await this.model.updateOne(
-      { _id: req.body.userId },
-      // req.body.userId contains the userId of the user who submitted the form
-      {
-        $push: {
-          images: {
-            imagePath: `/images/${result.Key}`,
-          },
-        },
-      },
-    );
-
-    await unlinkFile(file.path); // deletes file after it is uploaded
-    console.log('result: ', result);
-    res.send({ imagePath: `/images/${result.Key}` });
-  }
-
-  async uploadPhrase(req, res) {
-    console.log('req.body: ', req.body);
-    await this.model.updateOne(
-      { _id: req.body.userId },
-      {
-        $push: {
-          phrases: {
-            chinesePhrase: req.body.chinesePhrase,
-            pinyin: req.body.pinyin,
-            definition: req.body.definition
-          },
-        },
-      },
-    );
-    res.send("successfully uploaded phrase!");
-  }
-
-  async downloadImage(req, res) {
-    const { key } = req.params;
-    const readStream = getFileStream(key);
-    // pipe the image stream straight back to the client
-    readStream.pipe(res);
-  }
-
   /** Returns a token and the userId to the FE if log in is successful
    * @param {string} email
    * @param {string} password
@@ -108,7 +26,7 @@ class UserController extends BaseController {
           return;
         }
         const payload = {
-          _id: user._id,
+          _id: user.id,
           name: user.name,
           address: user.address,
         };
@@ -149,15 +67,32 @@ class UserController extends BaseController {
       } else {
         console.log('done the do');
         const payload = {
-          _id: newUser._id,
+          _id: newUser.id,
           firstName: newUser.firstName,
           lastName: newUser.lastName,
         };
         const token = jwt.sign(payload, this.salt, {
           expiresIn: '6h',
         });
-        res.send({ token, userId: newUser._id });
+        res.send({ token, userId: newUser.id });
       }
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+  /** get user profile data by id
+   * @param {string} id
+   */
+  async getUserDataById(req, res) {
+    try {
+      const { userId } = req.body;
+      const userProfile = await this.model.findOne({ _id: userId });
+      if (!userProfile) {
+        res.send('No data');
+        return;
+      }
+      res.send({ userProfile });
     } catch (err) {
       this.errorHandler(err, res);
     }
