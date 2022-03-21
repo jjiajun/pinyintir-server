@@ -39,7 +39,11 @@ const checkChinese = async (req, res) => {
         console.log('chars', characters);
         let firstIndex = -1;
         while (firstIndex < 0) {
-          const firstWord = characters[wordCounter];
+          let firstWord = characters[wordCounter];
+          while (!regex.test(firstWord)){
+            wordCounter += 1
+            firstWord = characters[wordCounter];
+          }
           console.log('firstword', firstWord);
           firstIndex = annotations.findIndex(({ description }) => description[0] === firstWord);
           wordCounter += 1;
@@ -56,7 +60,7 @@ const checkChinese = async (req, res) => {
           vertices = annotations[firstIndex].boundingPoly.vertices;
           let indexDifference = 0;
           for (let j=0 ; j<characters.length; j+=1){
-            console.log('counter j:',j)
+            console.log('counter j:',j, 'character',,'compare',)
             if  (firstIndex+j > annotations.length-1){
               break
             }
