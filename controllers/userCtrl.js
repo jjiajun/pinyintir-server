@@ -14,15 +14,106 @@ class UserController extends BaseController {
   async getUserDataById(req, res) {
     try {
       const { userId } = req.body;
-      console.log('ID: ', userId);
       const userProfile = await this.model.findOne({ _id: userId });
-
       if (!userProfile) {
         res.send('No data');
         return;
       }
-
       res.send({ userProfile });
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+  async getPhrasesByIdAndCategory(req, res) {
+    try {
+      const { userId, category } = req.body;
+      const userProfile = await this.model.findOne({ 
+        _id: userId
+      });
+      if (!userProfile) {
+        res.send('No data');
+        return;
+      }
+      const filteredPhrases = userProfile.phrases.filter((phrase) => phrase.category === category
+      )
+      console.log('filteredPhrases', filteredPhrases)
+      // extract phrases with category == 'Saved Words'
+      res.send(filteredPhrases);
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+  /** Create new category */
+  async addNewCategory(req, res) {
+    try {
+      const { userId, newCategory } = req.body; 
+      const updatedCategory = await this.model.updateOne(
+        // this should contain info to identify the particular data that you want to update
+        { _id: userId },
+        // push data into a particular array
+        {
+          $push: {
+            categories: newCategory
+          },
+        },
+      );
+      res.send("Added new category successfully!");
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+  /** Delete a category */
+  async deleteCategory(req, res) {
+    try {
+      const { userId, categoryToDelete } = req.body; 
+      const updatedCategory = await this.model.updateOne(
+        // this should contain info to identify the particular data that you want to update
+        { _id: userId },
+        // push data into a particular array
+        // The $in operator selects the documents where the value of a field equals any value in the specified array. To specify an $in expression, use the following prototype
+        {
+          $pull: {
+            categories: categoryToDelete,
+          },
+        },
+      );
+      res.send("Deleted category successful!");
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+
+  async getCategories(req, res) {
+    try {
+      const { userId } = req.body;
+      const categories = await this.model.findOne({ _id: userId })
+      .select("categories")
+      console.log("categories: ", categories.categories[0].name)
+      if (!categories) {
+        res.send('No data');
+        return;
+      }
+      res.send(categories.categories);
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+  async get(req, res) {
+    try {
+      const { userId } = req.body;
+      const categories = await this.model.findOne({ _id: userId })
+      .select("categories")
+      console.log("categories: ", categories.categories)
+      if (!categories) {
+        res.send('No data');
+        return;
+      }
+      res.send(categories.categories);
     } catch (err) {
       this.errorHandler(err, res);
     }
@@ -70,7 +161,8 @@ class UserController extends BaseController {
           phrases: {
             chinesePhrase: req.body.chinesePhrase,
             pinyin: req.body.pinyin,
-            definition: req.body.definition
+            definition: req.body.definition,
+            category: "Saved Phrases"
           },
         },
       },

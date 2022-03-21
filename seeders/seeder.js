@@ -21,18 +21,35 @@ const userSeeds = [
     lastName: 'Pethicc',
     email: 'dom@gmail.com',
     password: hash,
+    categories: ['Saved Phrases', 'Shameful Acts'],
+    phrases: [
+      {
+        chinesePhrase: "爸爸 Foong 打我的屁股",
+        pinyin: "ba ba Foong da wo de pi gu",
+        definition: "Daddy Foong spanks my ass",
+        category: "Saved Phrases",
+      },
+      {
+        chinesePhrase: "Gary 终于中奖，但是他跑路了",
+        pinyin: "Gary zhong yu zhong jiang, dan shi ta pao lu le",
+        definition: "Gary finally wins, but he runs away",
+        category: "Shameful Acts",
+      },
+    ],
   },
   {
     firstName: 'Tris',
     lastName: 'Waist',
     email: 'tris@gmail.com',
     password: hash,
+    categories: ['Saved Phrases'],
   },
   {
     firstName: 'Jiahao',
     lastName: 'Shorthair',
     email: 'jiahao@gmail.com',
     password: hash,
+    categories: ['Saved Phrases'],
   },
 ];
 const runSeeder = async () => {

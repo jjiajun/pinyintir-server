@@ -13,11 +13,13 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
     },
     password: { type: String, required: true },
+    categories: [String],
     phrases: [
       {
         chinesePhrase: String,
         pinyin: String,
         definition: String,
+        category: String,
       },
     ],
     images: [

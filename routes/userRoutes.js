@@ -25,5 +25,10 @@ module.exports = (controller, verifyToken) => {
   userRouter.get('/images/:key', controller.downloadImage.bind(controller));
   userRouter.post('/login', controller.logIn.bind(controller));
   userRouter.post('/signup', controller.signUp.bind(controller));
+  userRouter.post('/getcategories', controller.getCategories.bind(controller));
+  userRouter.post('/getphrases', controller.getPhrasesByIdAndCategory.bind(controller));
+  userRouter.post('/addnewcategory', controller.addNewCategory.bind(controller));
+  userRouter.post('/deletecategory', controller.deleteCategory.bind(controller));
+
   return userRouter;
 };
