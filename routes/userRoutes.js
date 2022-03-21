@@ -1,9 +1,6 @@
 const express = require('express');
 
 const userRouter = express.Router();
-const multer = require('multer');
-
-const upload = multer({ dest: 'images/' });
 
 module.exports = (controller, verifyToken) => {
   userRouter.post(

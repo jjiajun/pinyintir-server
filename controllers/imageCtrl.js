@@ -6,10 +6,13 @@ const BaseController = require('./baseCtrl.js');
 const unlinkFile = util.promisify(fs.unlink);
 
 class ImageController extends BaseController {
+  /** Upload an image
+   * @param {string} userId
+   * @param {file} file
+  */
   async uploadImage(req, res) {
-    console.log('req.body: ', req.body);
+    const { userId } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
-    console.log('req.file: ', req.file);
     const result = await uploadFile(file);
     /** result:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
@@ -23,7 +26,7 @@ class ImageController extends BaseController {
     } */
     // add Key to db under this user's name (to be continued)
     await this.model.updateOne(
-      { _id: req.body.userId },
+      { _id: userId },
       // req.body.userId contains the userId of the user who submitted the form
       {
         $push: {
@@ -36,6 +39,27 @@ class ImageController extends BaseController {
 
     await unlinkFile(file.path); // deletes file after it is uploaded
     res.send({ imagePath: `/${result.Key}` });
+  }
+
+  /** Delete an image
+   * @param {string} userId
+   * @param {string} imagePath
+  */
+  async deleteImage(req, res) {
+    const { userId, imagePath } = req.body;
+
+    await this.model.updateOne(
+      { _id: userId },
+      {
+        $pull: {
+          images: {
+            imagePath: `/${imagePath}`,
+          },
+        },
+      },
+    );
+
+    res.send('Deleted image successfully!');
   }
 }
 

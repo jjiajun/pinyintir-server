@@ -22,11 +22,7 @@ const userSchema = new Schema(
         category: String,
       },
     ],
-    images: [
-      {
-        imagePath: String,
-      },
-    ],
+    images: [String],
   },
   /**
    * The { timestamps: true } tells Mongoose to automatically
