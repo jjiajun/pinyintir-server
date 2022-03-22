@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
@@ -13,9 +13,7 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
     },
     password: { type: String, required: true },
-    categories: [
-      { name: String },
-    ],
+    categories: [{ name: String }],
     phrases: [
       {
         chinesePhrase: String,
@@ -24,9 +22,17 @@ const userSchema = new Schema(
         category: String,
       },
     ],
-    images: [{
-      imagePath: String,
-    }],
+    images: [
+      {
+        imagePath: String,
+        result: {
+          chinese: String,
+          pinyin: String,
+          translation: String,
+          vertices: Array,
+        },
+      },
+    ],
   },
   /**
    * The { timestamps: true } tells Mongoose to automatically
@@ -34,7 +40,7 @@ const userSchema = new Schema(
    * By default, createdAt and updatedAt are of type "Date".
    * When you update a document, Mongoose automatically increments updatedAt.
    * */
-  { timestamps: true },
+  { timestamps: true }
 );
 
-module.exports = model('User', userSchema);
+module.exports = model("User", userSchema);

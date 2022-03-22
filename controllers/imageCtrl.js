@@ -11,10 +11,10 @@ class ImageController extends BaseController {
    * @param {file} file
   */
   async uploadImage(req, res) {
-    const { userId } = req.body;
+    const { userId , result } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
-    const result = await uploadFile(file);
-    /** result:  {
+    const resultFile = await uploadFile(file);
+    /** resultFile:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
       // this location url can be used to directly access images
       // (if we allow public access) (we didnt though)
@@ -31,14 +31,14 @@ class ImageController extends BaseController {
       {
         $push: {
           images: {
-            imagePath: `/${result.Key}`,
+            imagePath: `/${resultFile.Key}`, result
           },
         },
       },
     );
 
     await unlinkFile(file.path); // deletes file after it is uploaded
-    res.send({ imagePath: `/${result.Key}` });
+    res.send({ imagePath: `/${resultFile.Key}` ,result});
   }
 
   /** Delete an image
