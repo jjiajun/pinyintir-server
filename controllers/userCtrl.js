@@ -72,7 +72,7 @@ class UserController extends BaseController {
         const token = jwt.sign(payload, this.salt, {
           expiresIn: '6h',
         });
-        res.send({ token, userId: newUser.id });
+        res.send({ token, userId: newUser.id ,success: true});
       }
     } catch (err) {
       this.errorHandler(err, res);
