@@ -39,11 +39,20 @@ const checkChinese = async (req, res) => {
         console.log('chars', characters);
         let firstIndex = -1;
         while (firstIndex < 0) {
-          const firstWord = characters[wordCounter];
+          let firstWord = characters[wordCounter];
+          console.log('before regex first word',firstWord,'test',regex.test(firstWord))
+          while (!regex.test(firstWord)){
+            wordCounter += 1
+            firstWord = characters[wordCounter];
+            console.log('regex first word',firstWord)
+            if (wordCounter >= characters.length) {
+            break;
+          }
+          }
           console.log('firstword', firstWord);
           firstIndex = annotations.findIndex(({ description }) => description[0] === firstWord);
           wordCounter += 1;
-          if (wordCounter > characters.length) {
+          if (wordCounter >= characters.length) {
             break;
           }
         }
