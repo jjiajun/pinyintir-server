@@ -17,7 +17,7 @@ class PhraseController extends BaseController {
               chinesePhrase,
               pinyin,
               definition,
-              category: 'Saved Phrases',
+              category: 'All Phrases',
             },
           },
         },
@@ -43,7 +43,6 @@ class PhraseController extends BaseController {
         return;
       }
       const filteredPhrases = userProfile.phrases.filter((phrase) => phrase.category === category);
-      // extract phrases with category == 'Saved Words'
       res.send(filteredPhrases);
     } catch (err) {
       this.errorHandler(err, res);
