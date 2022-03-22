@@ -25,12 +25,7 @@ const userSchema = new Schema(
     images: [
       {
         imagePath: String,
-        result: {
-          chinese: String,
-          pinyin: String,
-          translation: String,
-          vertices: Array,
-        },
+        result: Array,
         dimension:{
           height:Number,
           width:Number,
