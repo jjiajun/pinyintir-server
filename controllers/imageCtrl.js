@@ -11,8 +11,10 @@ class ImageController extends BaseController {
    * @param {file} file
   */
   async uploadImage(req, res) {
+    console.log('reqbodu',req.body)
     const { userId , result } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
+    console.log('result',result)
     const resultFile = await uploadFile(file);
     /** resultFile:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
