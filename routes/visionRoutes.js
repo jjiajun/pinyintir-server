@@ -72,7 +72,7 @@ const checkChinese = async (req, res) => {
             if (characters[j] === annotations[firstIndex + j].description[0]) {
               indexDifference += annotations[firstIndex + j].description.length;
               j += annotations[firstIndex + j].description.length - 1;
-            }
+            } else {indexDifference +=1}
           }
           console.log('first index',firstIndex,'index differ',indexDifference)
           annotations.splice(firstIndex, indexDifference);
