@@ -21,7 +21,7 @@ const userSchema = new Schema(
         chinesePhrase: String,
         pinyin: String,
         definition: String,
-        category: String,
+        category: [String],
       },
     ],
     images: [

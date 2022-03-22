@@ -17,7 +17,7 @@ class PhraseController extends BaseController {
               chinesePhrase,
               pinyin,
               definition,
-              category: 'All Phrases',
+              category: ['All Phrases'],
             },
           },
         },
@@ -42,7 +42,9 @@ class PhraseController extends BaseController {
         res.send('No data');
         return;
       }
-      const filteredPhrases = userProfile.phrases.filter((phrase) => phrase.category === category);
+      const filteredPhrases = userProfile.phrases.filter(
+        (phrase) => phrase.category.includes(category),
+      );
       res.send(filteredPhrases);
     } catch (err) {
       this.errorHandler(err, res);

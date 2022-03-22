@@ -22,7 +22,7 @@ const userSeeds = [
     email: 'dom@gmail.com',
     password: hash,
     categories: [{
-      name: 'Saved Phrases',
+      name: 'All Phrases',
     }, {
       name: 'Shameful Acts',
     }],
@@ -31,13 +31,13 @@ const userSeeds = [
         chinesePhrase: '爸爸 Foong 打我的屁股',
         pinyin: 'ba ba Foong da wo de pi gu',
         definition: 'Daddy Foong spanks my ass',
-        category: 'Saved Phrases',
+        category: ['All Phrases'],
       },
       {
         chinesePhrase: 'Gary 终于中奖，但是他跑路了',
         pinyin: 'Gary zhong yu zhong jiang, dan shi ta pao lu le',
         definition: 'Gary finally wins, but he runs away',
-        category: 'Shameful Acts',
+        category: ['All Phrases', 'Shameful Acts'],
       },
     ],
   },
