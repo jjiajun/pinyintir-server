@@ -1,7 +1,7 @@
-const fs = require("fs");
-const util = require("util");
-const { uploadFile } = require("../s3.js");
-const BaseController = require("./baseCtrl.js");
+const fs = require('fs');
+const util = require('util');
+const { uploadFile } = require('../s3.js');
+const BaseController = require('./baseCtrl.js');
 
 const unlinkFile = util.promisify(fs.unlink);
 
@@ -11,13 +11,13 @@ class ImageController extends BaseController {
    * @param {file} file
    */
   async uploadImage(req, res) {
-    console.log("reqbodu", req.body);
+    console.log('reqbodu', req.body);
     const { userId, result, dimension } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
-    let parsed = JSON.parse(result);
-    let parsedDims = JSON.parse(dimension);
+    const parsed = JSON.parse(result);
+    const parsedDims = JSON.parse(dimension);
 
-    console.log("result", result);
+    console.log('result', result);
     const resultFile = await uploadFile(file);
     /** resultFile:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
@@ -41,7 +41,7 @@ class ImageController extends BaseController {
             dimension: parsedDims,
           },
         },
-      }
+      },
     );
 
     await unlinkFile(file.path); // deletes file after it is uploaded
@@ -63,10 +63,9 @@ class ImageController extends BaseController {
             imagePath: `/${imagePath}`,
           },
         },
-      }
+      },
     );
-
-    res.send("Deleted image successfully!");
+    res.send('Deleted image successfully!');
   }
 }
 

@@ -40,14 +40,14 @@ const checkChinese = async (req, res) => {
         let firstIndex = -1;
         while (firstIndex < 0) {
           let firstWord = characters[wordCounter];
-          console.log('before regex first word',firstWord,'test',regex.test(firstWord))
-          while (!regex.test(firstWord)){
-            wordCounter += 1
+          console.log('before regex first word', firstWord, 'test', regex.test(firstWord));
+          while (!regex.test(firstWord)) {
+            wordCounter += 1;
             firstWord = characters[wordCounter];
-            console.log('regex first word',firstWord)
+            console.log('regex first word', firstWord);
             if (wordCounter >= characters.length) {
-            break;
-          }
+              break;
+            }
           }
           console.log('firstword', firstWord);
           firstIndex = annotations.findIndex(({ description }) => description[0] === firstWord);
@@ -64,24 +64,24 @@ const checkChinese = async (req, res) => {
         } else {
           vertices = annotations[firstIndex].boundingPoly.vertices;
           let indexDifference = 0;
-          
+
           for (let j = 0; j < characters.length; j += 1) {
-            console.log('counter j:', j, 'charac j :',characters[j]);
-            if (!regex.test(characters[j])){
+            console.log('counter j:', j, 'charac j :', characters[j]);
+            if (!regex.test(characters[j])) {
               continue;
             }
-            
+
             if (firstIndex + j > annotations.length - 1) {
               break;
             }
             if (characters[j] === annotations[firstIndex + j].description[0]) {
               indexDifference += annotations[firstIndex + j].description.length;
               j += annotations[firstIndex + j].description.length - 1;
-            } else {indexDifference +=1}
+            } else { indexDifference += 1; }
           }
-          console.log('first index',firstIndex,'index differ',indexDifference)
+          console.log('first index', firstIndex, 'index differ', indexDifference);
           annotations.splice(firstIndex, indexDifference);
-          console.log('length', annotations.length)
+          console.log('length', annotations.length);
         }
         const pinyin = pinyinify(characters);
         toTranslate.push(translate.translate(characters, 'en'));

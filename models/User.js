@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
   {
@@ -39,7 +39,7 @@ const userSchema = new Schema(
    * By default, createdAt and updatedAt are of type "Date".
    * When you update a document, Mongoose automatically increments updatedAt.
    * */
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = model("User", userSchema);
+module.exports = model('User', userSchema);
