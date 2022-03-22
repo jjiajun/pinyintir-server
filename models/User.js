@@ -31,6 +31,10 @@ const userSchema = new Schema(
           translation: String,
           vertices: Array,
         },
+        dimension:{
+          height:Number,
+          width:Number,
+        }
       },
     ],
   },
