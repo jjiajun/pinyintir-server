@@ -51,6 +51,32 @@ class PhraseController extends BaseController {
     }
   }
 
+  /** Delete a phrase
+   * @param {string} userId
+   * @param {string} phraseId
+  */
+  async deletePhrase(req, res) {
+    try {
+      const { userId, phraseId } = req.body;
+      console.log('PHRASE ID: ', phraseId);
+      await this.model.updateOne(
+        // this should contain info to identify the particular data that you want to update
+        { _id: userId },
+        // pull a particular phrase out of an array
+        {
+          $pull: {
+            phrases: {
+              _id: phraseId,
+            },
+          },
+        },
+      );
+      res.send('Deleted phrase successful!');
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
   /** Create new category
    * @param {string} userId
    * @param {string} newCategory
@@ -86,9 +112,7 @@ class PhraseController extends BaseController {
       await this.model.updateOne(
         // this should contain info to identify the particular data that you want to update
         { _id: userId },
-        // push data into a particular array
-        // The $in operator selects documents where
-        // the value of a field equals any value in the specified array.
+        // remove data from array
         {
           $pull: {
             categories: {
