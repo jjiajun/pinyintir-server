@@ -17,7 +17,7 @@ class PhraseController extends BaseController {
               chinesePhrase,
               pinyin,
               definition,
-              category: 'Saved Phrases',
+              category: ['All Phrases'],
             },
           },
         },
@@ -42,9 +42,9 @@ class PhraseController extends BaseController {
         res.send('No data');
         return;
       }
-      const filteredPhrases = userProfile.phrases.filter((phrase) => phrase.category === category);
-      console.log('filteredPhrases', filteredPhrases);
-      // extract phrases with category == 'Saved Words'
+      const filteredPhrases = userProfile.phrases.filter(
+        (phrase) => phrase.category.includes(category),
+      );
       res.send(filteredPhrases);
     } catch (err) {
       this.errorHandler(err, res);
@@ -64,7 +64,9 @@ class PhraseController extends BaseController {
         // push data into a particular array
         {
           $push: {
-            categories: newCategory,
+            categories: {
+              name: newCategory,
+            },
           },
         },
       );
@@ -89,7 +91,9 @@ class PhraseController extends BaseController {
         // the value of a field equals any value in the specified array.
         {
           $pull: {
-            categories: categoryToDelete,
+            categories: {
+              name: categoryToDelete,
+            },
           },
         },
       );
@@ -107,7 +111,6 @@ class PhraseController extends BaseController {
       const { userId } = req.body;
       const categories = await this.model.findOne({ _id: userId })
         .select('categories');
-      console.log('categories: ', categories.categories);
       if (!categories) {
         res.send('No data');
         return;

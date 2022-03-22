@@ -32,7 +32,7 @@ class UserController extends BaseController {
         };
         const token = jwt.sign(payload, this.salt, { expiresIn: '6h' });
         console.log(user);
-        res.send({ token, userId: user._id, success: true });
+        res.send({ token, userId: user.id, success: true });
       }
     } catch (err) {
       this.errorHandler(err, res);
@@ -66,13 +66,13 @@ class UserController extends BaseController {
       } else {
         console.log('done the do');
         const payload = {
-          _id: newUser.id, 
+          _id: newUser.id,
           lastName: newUser.lastName,
         };
         const token = jwt.sign(payload, this.salt, {
           expiresIn: '6h',
         });
-        res.send({ token, userId: newUser.id ,success: true});
+        res.send({ token, userId: newUser.id, success: true });
       }
     } catch (err) {
       this.errorHandler(err, res);
