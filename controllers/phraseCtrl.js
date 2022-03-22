@@ -43,7 +43,6 @@ class PhraseController extends BaseController {
         return;
       }
       const filteredPhrases = userProfile.phrases.filter((phrase) => phrase.category === category);
-      console.log('filteredPhrases', filteredPhrases);
       // extract phrases with category == 'Saved Words'
       res.send(filteredPhrases);
     } catch (err) {
@@ -64,7 +63,9 @@ class PhraseController extends BaseController {
         // push data into a particular array
         {
           $push: {
-            categories: newCategory,
+            categories: {
+              name: newCategory,
+            },
           },
         },
       );
@@ -89,7 +90,9 @@ class PhraseController extends BaseController {
         // the value of a field equals any value in the specified array.
         {
           $pull: {
-            categories: categoryToDelete,
+            categories: {
+              name: categoryToDelete,
+            },
           },
         },
       );
@@ -107,7 +110,6 @@ class PhraseController extends BaseController {
       const { userId } = req.body;
       const categories = await this.model.findOne({ _id: userId })
         .select('categories');
-      console.log('categories: ', categories.categories);
       if (!categories) {
         res.send('No data');
         return;

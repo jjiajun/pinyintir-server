@@ -21,7 +21,11 @@ const userSeeds = [
     lastName: 'Pethicc',
     email: 'dom@gmail.com',
     password: hash,
-    categories: ['Saved Phrases', 'Shameful Acts'],
+    categories: [{
+      name: 'Saved Phrases',
+    }, {
+      name: 'Shameful Acts',
+    }],
     phrases: [
       {
         chinesePhrase: '爸爸 Foong 打我的屁股',
@@ -42,14 +46,18 @@ const userSeeds = [
     lastName: 'Waist',
     email: 'tris@gmail.com',
     password: hash,
-    categories: ['Saved Phrases'],
+    categories: [{
+      name: 'Saved Phrases',
+    }],
   },
   {
     firstName: 'Jiahao',
     lastName: 'Shorthair',
     email: 'jiahao@gmail.com',
     password: hash,
-    categories: ['Saved Phrases'],
+    categories: [{
+      name: 'Saved Phrases',
+    }],
   },
 ];
 const runSeeder = async () => {
