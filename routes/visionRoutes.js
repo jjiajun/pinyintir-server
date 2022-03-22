@@ -65,7 +65,10 @@ const checkChinese = async (req, res) => {
           vertices = annotations[firstIndex].boundingPoly.vertices;
           let indexDifference = 0;
           for (let j = 0; j < characters.length; j += 1) {
-            console.log('counter j:', j);
+            console.log('counter j:', j, 'charac j :',characters[j]);
+            if (!regex.test(characters[j])){
+              continue;
+            }
             if (firstIndex + j > annotations.length - 1) {
               break;
             }
