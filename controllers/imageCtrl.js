@@ -9,12 +9,13 @@ class ImageController extends BaseController {
   /** Upload an image
    * @param {string} userId
    * @param {file} file
-  */
+   */
   async uploadImage(req, res) {
     console.log('reqbodu', req.body);
-    const { userId, result } = req.body;
+    const { userId, result, dimension } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
     const parsed = JSON.parse(result);
+    const parsedDims = JSON.parse(dimension);
 
     console.log('result', result);
     const resultFile = await uploadFile(file);
@@ -37,6 +38,7 @@ class ImageController extends BaseController {
           images: {
             imagePath: `/${resultFile.Key}`,
             result: parsed,
+            dimension: parsedDims,
           },
         },
       },
@@ -49,7 +51,7 @@ class ImageController extends BaseController {
   /** Delete an image
    * @param {string} userId
    * @param {string} imagePath
-  */
+   */
   async deleteImage(req, res) {
     const { userId, imagePath } = req.body;
 
@@ -63,7 +65,6 @@ class ImageController extends BaseController {
         },
       },
     );
-
     res.send('Deleted image successfully!');
   }
 }
