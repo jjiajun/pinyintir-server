@@ -9,6 +9,7 @@ class PhraseController extends BaseController {
       const {
         userId, chinesePhrase, pinyin, definition,
       } = req.body;
+      console.log('THE POST REQUEST IS WORKING 1');
       await this.model.updateOne(
         { _id: userId },
         {
@@ -22,6 +23,7 @@ class PhraseController extends BaseController {
           },
         },
       );
+      console.log('THE POST REQUEST IS WORKING 2');
       res.send('successfully uploaded phrase!');
     } catch (err) {
       this.errorHandler(err, res);
