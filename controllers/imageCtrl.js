@@ -14,6 +14,8 @@ class ImageController extends BaseController {
     console.log('reqbodu',req.body)
     const { userId , result } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
+    let parsed = JSON.parse(result)
+
     console.log('result',result)
     const resultFile = await uploadFile(file);
     /** resultFile:  {
@@ -33,7 +35,7 @@ class ImageController extends BaseController {
       {
         $push: {
           images: {
-            imagePath: `/${resultFile.Key}`, result
+            imagePath: `/${resultFile.Key}`, result:parsed
           },
         },
       },
