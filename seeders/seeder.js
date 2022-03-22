@@ -29,13 +29,13 @@ const userSeeds = [
     phrases: [
       {
         chinesePhrase: '爸爸 Foong 打我的屁股',
-        pinyin: 'ba ba Foong da wo de pi gu',
+        pinyin: 'Bàba Foong dǎ wǒ de pìgu',
         definition: 'Daddy Foong spanks my ass',
         category: ['All Phrases'],
       },
       {
         chinesePhrase: 'Gary 终于中奖，但是他跑路了',
-        pinyin: 'Gary zhong yu zhong jiang, dan shi ta pao lu le',
+        pinyin: 'Gary zhōngyú zhòngjiǎng, dànshì tā pǎo lùle',
         definition: 'Gary finally wins, but he runs away',
         category: ['All Phrases', 'Shameful Acts'],
       },

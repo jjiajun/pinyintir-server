@@ -11,12 +11,12 @@ class ImageController extends BaseController {
    * @param {file} file
   */
   async uploadImage(req, res) {
-    console.log('reqbodu',req.body)
-    const { userId , result } = req.body;
+    console.log('reqbodu', req.body);
+    const { userId, result } = req.body;
     const { file } = req; // contains data about the image file that was sent over in formData
-    let parsed = JSON.parse(result)
+    const parsed = JSON.parse(result);
 
-    console.log('result',result)
+    console.log('result', result);
     const resultFile = await uploadFile(file);
     /** resultFile:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
@@ -35,14 +35,15 @@ class ImageController extends BaseController {
       {
         $push: {
           images: {
-            imagePath: `/${resultFile.Key}`, result:parsed
+            imagePath: `/${resultFile.Key}`,
+            result: parsed,
           },
         },
       },
     );
 
     await unlinkFile(file.path); // deletes file after it is uploaded
-    res.send({ imagePath: `/${resultFile.Key}` ,result});
+    res.send({ imagePath: `/${resultFile.Key}`, result });
   }
 
   /** Delete an image
