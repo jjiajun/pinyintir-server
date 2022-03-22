@@ -75,6 +75,7 @@ const checkChinese = async (req, res) => {
             }
           }
           annotations.splice(firstIndex, indexDifference);
+          console.log('length', annotations.length)
         }
         const pinyin = pinyinify(characters);
         toTranslate.push(translate.translate(characters, 'en'));
