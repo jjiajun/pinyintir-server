@@ -40,6 +40,7 @@ const checkChinese = async (req, res) => {
         let firstIndex = -1;
         while (firstIndex < 0) {
           let firstWord = characters[wordCounter];
+          console.log('before regex first word',firstWord,'test',regex.test(firstWord))
           while (!regex.test(firstWord)){
             wordCounter += 1
             firstWord = characters[wordCounter];
