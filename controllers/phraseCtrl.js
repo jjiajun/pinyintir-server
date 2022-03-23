@@ -96,7 +96,11 @@ class PhraseController extends BaseController {
           },
         },
       );
-      res.send('Added new category successfully!');
+      // Find the newly pushed category -> get _id
+      const result = await this.model.findOne({ _id: userId }).select('categories');
+      const catId = result.categories[result.categories.length - 1].id;
+      // run both async functions in parallel
+      res.send(catId);
     } catch (err) {
       this.errorHandler(err, res);
     }
