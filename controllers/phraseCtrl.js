@@ -22,7 +22,10 @@ class PhraseController extends BaseController {
           },
         },
       );
-      res.send('successfully uploaded phrase!');
+      // Find the newly pushed category -> get _id
+      const result = await this.model.findOne({ _id: userId }).select('phrases');
+      const phraseId = result.phrases[result.phrases.length - 1].id;
+      res.send(phraseId);
     } catch (err) {
       this.errorHandler(err, res);
     }
@@ -98,9 +101,8 @@ class PhraseController extends BaseController {
       );
       // Find the newly pushed category -> get _id
       const result = await this.model.findOne({ _id: userId }).select('categories');
-      const catId = result.categories[result.categories.length - 1].id;
-      // run both async functions in parallel
-      res.send(catId);
+      const categoryId = result.categories[result.categories.length - 1].id;
+      res.send(categoryId);
     } catch (err) {
       this.errorHandler(err, res);
     }
