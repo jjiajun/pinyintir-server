@@ -47,7 +47,9 @@ class ImageController extends BaseController {
       const imageId = resp.images[resp.images.length - 1].id;
 
       await unlinkFile(file.path); // deletes file after it is uploaded
-      res.send({ imagePath: `/${resultFile.Key}`, result, imageId });
+      res.send({
+        imagePath: `/${resultFile.Key}`, result, dimension: parsedDims, imageId,
+      });
     } catch (err) {
       this.errorHandler(err);
     }
