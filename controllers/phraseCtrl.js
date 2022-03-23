@@ -100,7 +100,6 @@ class PhraseController extends BaseController {
   async deletePhrase(req, res) {
     try {
       const { userId, phraseId } = req.body;
-      console.log('PHRASE ID: ', phraseId);
       await this.model.updateOne(
         // this should contain info to identify the particular data that you want to update
         { _id: userId },
