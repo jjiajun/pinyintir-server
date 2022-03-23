@@ -18,7 +18,7 @@ mongoose.connect(DATABASE, () => {
 const userSeeds = [
   {
     firstName: 'Dom',
-    lastName: 'Pethicc',
+    lastName: 'Inique',
     email: 'dom@gmail.com',
     password: hash,
     categories: [{
@@ -42,21 +42,30 @@ const userSeeds = [
     ],
   },
   {
-    firstName: 'Tris',
-    lastName: 'Waist',
+    firstName: 'Tristan',
+    lastName: 'Teo',
     email: 'tris@gmail.com',
     password: hash,
     categories: [{
-      name: 'Saved Phrases',
+      name: 'AllPhrases',
     }],
   },
   {
     firstName: 'Jiahao',
-    lastName: 'Shorthair',
+    lastName: 'Lim',
     email: 'jiahao@gmail.com',
     password: hash,
     categories: [{
-      name: 'Saved Phrases',
+      name: 'All Phrases',
+    }],
+  },
+  {
+    firstName: 'Foong',
+    lastName: 'Daddy',
+    email: 'foong@daddy.com',
+    password: hash,
+    categories: [{
+      name: 'All Phrases',
     }],
   },
 ];

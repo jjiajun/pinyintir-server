@@ -11,13 +11,14 @@ class ImageController extends BaseController {
    * @param {file} file
    */
   async uploadImage(req, res) {
-    console.log('reqbodu', req.body);
-    const { userId, result, dimension } = req.body;
-    const { file } = req; // contains data about the image file that was sent over in formData
-    const parsed = JSON.parse(result);
-    const parsedDims = JSON.parse(dimension);
-    const resultFile = await uploadFile(file);
-    /** resultFile:  {
+    try {
+      console.log('reqbodu', req.body);
+      const { userId, result, dimension } = req.body;
+      const { file } = req; // contains data about the image file that was sent over in formData
+      const parsed = JSON.parse(result);
+      const parsedDims = JSON.parse(dimension);
+      const resultFile = await uploadFile(file);
+      /** resultFile:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
       // this location url can be used to directly access images
       // (if we allow public access) (we didnt though)
@@ -27,26 +28,29 @@ class ImageController extends BaseController {
       Key: '16dd64db8c69c194e3b09696d8a6086b',
       Bucket: 'chinese-ar-app'
     } */
-    // add Key to db under this user's name (to be continued)
-    await this.model.updateOne(
-      { _id: userId },
-      // req.body.userId contains the userId of the user who submitted the form
-      {
-        $push: {
-          images: {
-            imagePath: `/${resultFile.Key}`,
-            result: parsed,
-            dimension: parsedDims,
+      // add Key to db under this user's name (to be continued)
+      await this.model.updateOne(
+        { _id: userId },
+        // req.body.userId contains the userId of the user who submitted the form
+        {
+          $push: {
+            images: {
+              imagePath: `/${resultFile.Key}`,
+              result: parsed,
+              dimension: parsedDims,
+            },
           },
         },
-      },
-    );
-    // Find the newly pushed category -> get _id
-    const resp = await this.model.findOne({ _id: userId }).select('images');
-    const imageId = resp.images[resp.images.length - 1].id;
+      );
+      // Find the newly pushed category -> get _id
+      const resp = await this.model.findOne({ _id: userId }).select('images');
+      const imageId = resp.images[resp.images.length - 1].id;
 
-    await unlinkFile(file.path); // deletes file after it is uploaded
-    res.send({ imagePath: `/${resultFile.Key}`, result, imageId });
+      await unlinkFile(file.path); // deletes file after it is uploaded
+      res.send({ imagePath: `/${resultFile.Key}`, result, imageId });
+    } catch (err) {
+      this.errorHandler(err);
+    }
   }
 
   /** Delete an image
@@ -54,19 +58,22 @@ class ImageController extends BaseController {
    * @param {string} imagePath
    */
   async deleteImage(req, res) {
-    const { userId, imagePath } = req.body;
-
-    await this.model.updateOne(
-      { _id: userId },
-      {
-        $pull: {
-          images: {
-            imagePath: `/${imagePath}`,
+    try {
+      const { userId, imagePath } = req.body;
+      await this.model.updateOne(
+        { _id: userId },
+        {
+          $pull: {
+            images: {
+              imagePath: `/${imagePath}`,
+            },
           },
         },
-      },
-    );
-    res.send('Deleted image successfully!');
+      );
+      res.send('Deleted image successfully!');
+    } catch (err) {
+      this.errorHandler(err);
+    }
   }
 }
 
