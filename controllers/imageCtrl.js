@@ -16,8 +16,6 @@ class ImageController extends BaseController {
     const { file } = req; // contains data about the image file that was sent over in formData
     const parsed = JSON.parse(result);
     const parsedDims = JSON.parse(dimension);
-
-    console.log('result', result);
     const resultFile = await uploadFile(file);
     /** resultFile:  {
       ETag: '"76823f128b9a086c136a0f378a35691f"',
@@ -43,9 +41,13 @@ class ImageController extends BaseController {
         },
       },
     );
+    // Find the newly pushed category -> get _id
+    const resp = await this.model.findOne({ _id: userId }).select('images');
+    const imageId = resp.images[resp.images.length - 1].id;
+    res.send(imageId);
 
     await unlinkFile(file.path); // deletes file after it is uploaded
-    res.send({ imagePath: `/${resultFile.Key}`, result });
+    res.send({ imagePath: `/${resultFile.Key}`, result, imageId });
   }
 
   /** Delete an image
