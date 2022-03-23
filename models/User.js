@@ -26,10 +26,10 @@ const userSchema = new Schema(
       {
         imagePath: String,
         result: Array,
-        dimension:{
-          height:Number,
-          width:Number,
-        }
+        dimension: {
+          height: Number,
+          width: Number,
+        },
       },
     ],
   },

@@ -54,6 +54,45 @@ class PhraseController extends BaseController {
     }
   }
 
+  async addCategoryToPhrase(req, res) {
+    try {
+      const { userId, phraseId, newCategory } = req.body;
+
+      await this.model.findOneAndUpdate(
+        // this should contain info to identify the particular data that you want to update
+        { _id: userId, phrases: { $elemMatch: { id: phraseId } } },
+        // push data into a particular array
+        {
+          $push: {
+            'phrases.$.category': newCategory,
+          },
+        },
+      );
+      res.send('Add category to phrases successfully!');
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
+  async removeCategoryFromPhrase(req, res) {
+    try {
+      const { userId, phraseId, category } = req.body;
+      await this.model.findOneAndUpdate(
+        // this should contain info to identify the particular data that you want to update
+        { _id: userId, phrases: { $elemMatch: { id: phraseId } } },
+        // push data into a particular array
+        {
+          $pull: {
+            'phrases.$.category': category,
+          },
+        },
+      );
+      res.send('Remove category from phrase successfully!');
+    } catch (err) {
+      this.errorHandler(err, res);
+    }
+  }
+
   /** Delete a phrase
    * @param {string} userId
    * @param {string} phraseId

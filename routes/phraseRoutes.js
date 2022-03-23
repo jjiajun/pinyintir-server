@@ -11,6 +11,10 @@ module.exports = (controller, verifyToken) => {
 
   phraseRouter.post('/getphrases', controller.getPhrasesByIdAndCategory.bind(controller));
 
+  phraseRouter.post('/addcategorytophrase', controller.addCategoryToPhrase.bind(controller));
+
+  phraseRouter.post('/removecategoryfromphrase', controller.removeCategoryFromPhrase.bind(controller));
+
   phraseRouter.post('/deletephrase', controller.deletePhrase.bind(controller));
 
   phraseRouter.post('/getcategories', controller.getCategories.bind(controller));
