@@ -60,7 +60,7 @@ class PhraseController extends BaseController {
 
       await this.model.findOneAndUpdate(
         // this should contain info to identify the particular data that you want to update
-        { _id: userId, phrases: { $elemMatch: { id: phraseId } } },
+        { _id: userId, phrases: { $elemMatch: { _id: phraseId } } },
         // push data into a particular array
         {
           $push: {
@@ -79,7 +79,7 @@ class PhraseController extends BaseController {
       const { userId, phraseId, category } = req.body;
       await this.model.findOneAndUpdate(
         // this should contain info to identify the particular data that you want to update
-        { _id: userId, phrases: { $elemMatch: { id: phraseId } } },
+        { _id: userId, phrases: { $elemMatch: { _id: phraseId } } },
         // push data into a particular array
         {
           $pull: {
