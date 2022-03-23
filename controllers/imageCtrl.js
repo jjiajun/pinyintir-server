@@ -44,7 +44,6 @@ class ImageController extends BaseController {
     // Find the newly pushed category -> get _id
     const resp = await this.model.findOne({ _id: userId }).select('images');
     const imageId = resp.images[resp.images.length - 1].id;
-    res.send(imageId);
 
     await unlinkFile(file.path); // deletes file after it is uploaded
     res.send({ imagePath: `/${resultFile.Key}`, result, imageId });
