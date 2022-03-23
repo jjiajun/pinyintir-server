@@ -160,7 +160,7 @@ class PhraseController extends BaseController {
         {
           $pull: {
             categories: {
-              name: categoryToDelete,
+              _id: categoryToDelete,
             },
           },
         },
