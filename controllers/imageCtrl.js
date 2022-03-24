@@ -48,10 +48,10 @@ class ImageController extends BaseController {
 
       await unlinkFile(file.path); // deletes file after it is uploaded
       res.send({
-        imagePath: `/${resultFile.Key}`, result, dimension: parsedDims, imageId,
+        imagePath: `/${resultFile.Key}`, result: parsed, dimension: parsedDims, imageId,
       });
     } catch (err) {
-      this.errorHandler(err);
+      this.errorHandler(err, res);
     }
   }
 
@@ -74,7 +74,7 @@ class ImageController extends BaseController {
       );
       res.send('Deleted image successfully!');
     } catch (err) {
-      this.errorHandler(err);
+      this.errorHandler(err, res);
     }
   }
 }
