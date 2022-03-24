@@ -158,8 +158,10 @@ class PhraseController extends BaseController {
   */
   async deleteCategory(req, res) {
     try {
-      console.log('DELETING CATEGORY');
       const { userId, categoryToDelete } = req.body;
+      console.log('DELETING CATEGORY');
+      console.log('USERID', userId);
+      console.log('DELETING CATEGORY', categoryToDelete);
       await this.model.updateOne(
         // this should contain info to identify the particular data that you want to update
         { _id: userId },
