@@ -58,7 +58,7 @@ class PhraseController extends BaseController {
     try {
       const { userId, phraseId, newCategory } = req.body;
 
-      await this.model.findOneAndUpdate(
+      const result = await this.model.findOneAndUpdate(
         // this should contain info to identify the particular data that you want to update
         { _id: userId, phrases: { $elemMatch: { _id: phraseId } } },
         // push data into a particular array
@@ -67,8 +67,10 @@ class PhraseController extends BaseController {
             'phrases.$.category': newCategory,
           },
         },
+        { new: true },
       );
-      res.send('Add category to phrases successfully!');
+      console.log('MONGOOSE RESULT (ADD CAT): ', result);
+      res.send(result);
     } catch (err) {
       this.errorHandler(err, res);
     }
@@ -77,7 +79,7 @@ class PhraseController extends BaseController {
   async removeCategoryFromPhrase(req, res) {
     try {
       const { userId, phraseId, category } = req.body;
-      await this.model.findOneAndUpdate(
+      const result = await this.model.findOneAndUpdate(
         // this should contain info to identify the particular data that you want to update
         { _id: userId, phrases: { $elemMatch: { _id: phraseId } } },
         // push data into a particular array
@@ -86,8 +88,10 @@ class PhraseController extends BaseController {
             'phrases.$.category': category,
           },
         },
+        { new: true },
       );
-      res.send('Remove category from phrase successfully!');
+      console.log('MONGOOSE RESULT (REMOVE CAT): ', result);
+      res.send(result);
     } catch (err) {
       this.errorHandler(err, res);
     }
