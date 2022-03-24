@@ -69,6 +69,7 @@ class PhraseController extends BaseController {
         },
         { new: true },
       );
+      console.log('FINAL CONSOLE LOG? ', result.phrases);
       res.send(result.phrases.filter((phrase) => phrase._id == phraseId)[0]);
     } catch (err) {
       this.errorHandler(err, res);
