@@ -69,8 +69,7 @@ class PhraseController extends BaseController {
         },
         { new: true },
       );
-      console.log('MONGOOSE RESULT (ADD CAT): ', result);
-      res.send(result);
+      res.send(result.phrases.filter((phrase) => phrase._id == phraseId)[0]);
     } catch (err) {
       this.errorHandler(err, res);
     }
@@ -90,8 +89,7 @@ class PhraseController extends BaseController {
         },
         { new: true },
       );
-      console.log('MONGOOSE RESULT (REMOVE CAT): ', result);
-      res.send(result);
+      res.send(result.phrases.filter((phrase) => phrase._id == phraseId)[0]);
     } catch (err) {
       this.errorHandler(err, res);
     }
