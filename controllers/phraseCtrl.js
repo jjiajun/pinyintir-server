@@ -72,7 +72,7 @@ class PhraseController extends BaseController {
       console.log('FINAL CONSOLE LOG? (ADD) ', result.phrases);
       console.log('ONE MORE CONSOLE LOG: ', result.phrases.filter((phrase) => phrase._id == phraseId));
 
-      res.send(result.phrases.filter((phrase) => phrase._id == phraseId));
+      res.send(result.phrases.filter((phrase) => phrase._id == phraseId)[0]);
     } catch (err) {
       this.errorHandler(err, res);
     }
