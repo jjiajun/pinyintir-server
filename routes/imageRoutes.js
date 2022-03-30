@@ -23,5 +23,7 @@ module.exports = (controller, verifyToken) => {
 
   imageRouter.get('/:key', downloadImage);
 
+  imageRouter.post('/deleteimage', controller.deleteImage.bind(controller));
+
   return imageRouter;
 };

@@ -21,16 +21,12 @@ const userSeeds = [
     lastName: 'Inique',
     email: 'dom@gmail.com',
     password: hash,
-    categories: [{
-      name: 'All Phrases',
-    }, {
-      name: 'Shameful Acts',
-    }],
+    categories: [{ name: 'All Phrases' }, { name: 'Shameful Acts' }, { name: 'Vulgarities' }],
     phrases: [
       {
         chinesePhrase: '爸爸 Foong 打我的屁股',
         pinyin: 'Bàba Foong dǎ wǒ de pìgu',
-        definition: 'Daddy Foong spanks my ass',
+        definition: 'daddy Foong spanks my ass',
         category: ['All Phrases'],
       },
       {
@@ -39,6 +35,12 @@ const userSeeds = [
         definition: 'Gary finally wins, but he runs away',
         category: ['All Phrases', 'Shameful Acts'],
       },
+      {
+        chinesePhrase: '他妈的',
+        pinyin: 'Tā mā de',
+        definition: 'damn it',
+        category: ['All Phrases', 'Vulgarities'],
+      },
     ],
   },
   {
@@ -46,27 +48,81 @@ const userSeeds = [
     lastName: 'Teo',
     email: 'tris@gmail.com',
     password: hash,
-    categories: [{
-      name: 'AllPhrases',
-    }],
+    categories: [{ name: 'All Phrases' }, { name: 'Shameful Acts' }, { name: 'Vulgarities' }],
+    phrases: [
+      {
+        chinesePhrase: '爸爸 Foong 打我的屁股',
+        pinyin: 'Bàba Foong dǎ wǒ de pìgu',
+        definition: 'daddy Foong spanks my ass',
+        category: ['All Phrases'],
+      },
+      {
+        chinesePhrase: 'Gary 终于中奖，但是他跑路了',
+        pinyin: 'Gary zhōngyú zhòngjiǎng, dànshì tā pǎo lùle',
+        definition: 'Gary finally wins, but he runs away',
+        category: ['All Phrases', 'Shameful Acts'],
+      },
+      {
+        chinesePhrase: '他妈的',
+        pinyin: 'Tā mā de',
+        definition: 'damn it',
+        category: ['All Phrases', 'Vulgarities'],
+      },
+    ],
   },
   {
     firstName: 'Jiahao',
     lastName: 'Lim',
     email: 'jiahao@gmail.com',
     password: hash,
-    categories: [{
-      name: 'All Phrases',
-    }],
+    categories: [{ name: 'All Phrases' }, { name: 'Shameful Acts' }, { name: 'Vulgarities' }],
+    phrases: [
+      {
+        chinesePhrase: '爸爸 Foong 打我的屁股',
+        pinyin: 'Bàba Foong dǎ wǒ de pìgu',
+        definition: 'daddy Foong spanks my ass',
+        category: ['All Phrases'],
+      },
+      {
+        chinesePhrase: 'Gary 终于中奖，但是他跑路了',
+        pinyin: 'Gary zhōngyú zhòngjiǎng, dànshì tā pǎo lùle',
+        definition: 'Gary finally wins, but he runs away',
+        category: ['All Phrases', 'Shameful Acts'],
+      },
+      {
+        chinesePhrase: '他妈的',
+        pinyin: 'Tā mā de',
+        definition: 'damn it',
+        category: ['All Phrases', 'Vulgarities'],
+      },
+    ],
   },
   {
     firstName: 'Foong',
     lastName: 'Daddy',
     email: 'foong@daddy.com',
     password: hash,
-    categories: [{
-      name: 'All Phrases',
-    }],
+    categories: [{ name: 'All Phrases' }, { name: 'Shameful Acts' }, { name: 'Vulgarities' }],
+    phrases: [
+      {
+        chinesePhrase: '爸爸 Foong 打我的屁股',
+        pinyin: 'Bàba Foong dǎ wǒ de pìgu',
+        definition: 'daddy Foong spanks my ass',
+        category: ['All Phrases'],
+      },
+      {
+        chinesePhrase: 'Gary 终于中奖，但是他跑路了',
+        pinyin: 'Gary zhōngyú zhòngjiǎng, dànshì tā pǎo lùle',
+        definition: 'Gary finally wins, but he runs away',
+        category: ['All Phrases', 'Shameful Acts'],
+      },
+      {
+        chinesePhrase: '他妈的',
+        pinyin: 'Tā mā de',
+        definition: 'damn it',
+        category: ['All Phrases', 'Vulgarities'],
+      },
+    ],
   },
 ];
 const runSeeder = async () => {
