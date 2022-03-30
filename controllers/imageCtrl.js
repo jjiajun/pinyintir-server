@@ -67,7 +67,7 @@ class ImageController extends BaseController {
         {
           $pull: {
             images: {
-              imagePath: `/${imagePath}`,
+              imagePath: `${imagePath}`,
             },
           },
         },
